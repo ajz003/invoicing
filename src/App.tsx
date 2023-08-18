@@ -1,28 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import InvoiceTable from './components/InvoiceTable/InvoiceTable';
+import React, { useState } from "react";
+import "./App.css";
+import InvoiceTable, {
+    IInvoiceItem,
+} from "./components/InvoiceTable/InvoiceTable";
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <InvoiceTable />
-    </div>
-  );
+    const [items, setItems] = useState<IInvoiceItem[]>([
+        {
+            id: 0,
+            description: "",
+            qty: 0,
+            rate: 0,
+            amount: 0,
+        },
+    ]);
+    const [notes, setNotes] = useState<string>("");
+
+    const total = items.reduce((prev, curr) => prev + curr.amount, 0)
+
+    return (
+        <div className="App">
+            <InvoiceTable
+                items={items}
+                setItems={setItems}
+                total={total}
+            />
+            <label htmlFor="notes">Notes:</label>
+            <textarea
+                id="notes"
+                name="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+            />
+            <br />
+            <button
+                type="submit"
+                onClick={(e) => {
+                    e.preventDefault();
+                    axios
+                        .post("https://eob5gg57g649qqh.m.pipedream.net", {
+                            items,
+                            total,
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }}
+            >
+                Submit
+            </button>
+        </div>
+    );
 }
 
 export default App;

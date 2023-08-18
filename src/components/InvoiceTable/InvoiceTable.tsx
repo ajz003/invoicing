@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import InvoiceItem from "./InvoiceItem";
 import { produce } from "immer";
 import InvoiceTotal from "./InvoiceTotal";
@@ -12,18 +12,14 @@ export interface IInvoiceItem {
     amount: number;
 }
 
-const startingItems: IInvoiceItem[] = [
-    {
-        id: 0,
-        description: "",
-        qty: 0,
-        rate: 0,
-        amount: 0,
-    },
-];
+interface InvoiceTableProps {
+    items: IInvoiceItem[];
+    setItems: React.Dispatch<React.SetStateAction<IInvoiceItem[]>>;
+    total: number;
+}
 
-const InvoiceTable = () => {
-    const [items, setItems] = useState<IInvoiceItem[]>(startingItems);
+const InvoiceTable = (props: InvoiceTableProps) => {
+    const {items, setItems, total} = props;
 
     const handleItemChange = (
         id: number,
@@ -98,10 +94,7 @@ const InvoiceTable = () => {
                 </tbody>
                 <tfoot>
                     <InvoiceTotal
-                        total={items.reduce(
-                            (prev, curr) => prev + curr.amount,
-                            0
-                        )}
+                        total={total}
                     />
                 </tfoot>
             </table>
