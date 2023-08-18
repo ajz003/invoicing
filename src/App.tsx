@@ -20,7 +20,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <InvoiceTable></InvoiceTable>
+      <InvoiceTable />
     </div>
   );
 }

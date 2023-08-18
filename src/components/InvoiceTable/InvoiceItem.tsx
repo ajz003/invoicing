@@ -22,7 +22,8 @@ const InvoiceItem = (props: InvoiceItemProps) => {
                     />
                 </td>
                 <td>
-                    <input type="number"
+                    <input
+                        type="number"
                         value={qty}
                         onChange={(e) => handleItemChange(id, "qty", parseInt(e.target.value))}
                     />

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InvoiceItem from "./InvoiceItem";
 import { produce } from "immer";
 import InvoiceTotal from "./InvoiceTotal";
+import AddItemButton from "./AddItemButton";
 
 export interface IInvoiceItem {
     id: number;
@@ -11,7 +12,7 @@ export interface IInvoiceItem {
     amount: number;
 }
 
-const dummyItems: IInvoiceItem[] = [
+const startingItems: IInvoiceItem[] = [
     {
         id: 0,
         description: "",
@@ -22,7 +23,7 @@ const dummyItems: IInvoiceItem[] = [
 ];
 
 const InvoiceTable = () => {
-    const [items, setItems] = useState<IInvoiceItem[]>(dummyItems);
+    const [items, setItems] = useState<IInvoiceItem[]>(startingItems);
 
     const handleItemChange = (
         id: number,
@@ -33,7 +34,7 @@ const InvoiceTable = () => {
             produce((draft) => {
                 const item = draft.find((item) => item.id === id);
                 if (item) {
-                    console.log(typeof newValue)
+                    console.log(typeof newValue);
                     if (
                         typeof newValue === "string" &&
                         property === "description"
@@ -57,33 +58,55 @@ const InvoiceTable = () => {
         );
     };
 
+    const addLineItem = () => {
+        setItems(
+            produce(items, draft => {
+                draft.push({
+                    id: items.length,
+                    description: "",
+                    qty: 0,
+                    rate: 0,
+                    amount: 0,
+                });
+            })
+        );
+    };
+
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Item Description</th>
-                    <th>Qty</th>
-                    <th>Rate</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                {items.map((item, i) => (
-                    <InvoiceItem
-                        key={i}
-                        id={item.id}
-                        description={item.description}
-                        qty={item.qty}
-                        rate={item.rate}
-                        amount={item.amount}
-                        handleItemChange={handleItemChange}
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Description</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {items.map((item, i) => (
+                        <InvoiceItem
+                            key={i}
+                            id={item.id}
+                            description={item.description}
+                            qty={item.qty}
+                            rate={item.rate}
+                            amount={item.amount}
+                            handleItemChange={handleItemChange}
+                        />
+                    ))}
+                </tbody>
+                <tfoot>
+                    <InvoiceTotal
+                        total={items.reduce(
+                            (prev, curr) => prev + curr.amount,
+                            0
+                        )}
                     />
-                ))}
-            </tbody>
-            <tfoot>
-                <InvoiceTotal total={items.reduce((prev, curr) => prev + curr.amount, 0)} />
-            </tfoot>
-        </table>
+                </tfoot>
+            </table>
+            <AddItemButton addLineItem={addLineItem} />
+        </div>
     );
 };
 
