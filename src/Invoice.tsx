@@ -6,12 +6,14 @@ import InvoiceTable, {
 import axios from "axios";
 
 interface IInvoicePostBody {
+    dueDate: string;
     items: IInvoiceItem[];
     total: number;
     notes: string;
 }
 
-function App() {
+function Invoice() {
+    const [dueDate, setDueDate] = useState("");
     const [items, setItems] = useState<IInvoiceItem[]>([
         {
             id: 0,
@@ -27,7 +29,18 @@ function App() {
 
     return (
         <div className="App">
+            <label htmlFor="due-date">Due Date:</label>
+            <input
+                type="datetime-local"
+                id="due-date"
+                name="due-date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+            />
+
             <InvoiceTable items={items} setItems={setItems} total={total} />
+            <br />
+
             <label htmlFor="notes">Notes:</label>
             <textarea
                 id="notes"
@@ -36,11 +49,13 @@ function App() {
                 onChange={(e) => setNotes(e.target.value)}
             />
             <br />
+
             <button
                 type="submit"
                 onClick={(e) => {
                     e.preventDefault();
                     const postBody: IInvoicePostBody = {
+                        dueDate,
                         items,
                         total,
                         notes,
@@ -64,4 +79,4 @@ function App() {
     );
 }
 
-export default App;
+export default Invoice;
