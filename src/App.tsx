@@ -5,6 +5,12 @@ import InvoiceTable, {
 } from "./components/InvoiceTable/InvoiceTable";
 import axios from "axios";
 
+interface IInvoicePostBody {
+    items: IInvoiceItem[];
+    total: number;
+    notes: string;
+}
+
 function App() {
     const [items, setItems] = useState<IInvoiceItem[]>([
         {
@@ -17,15 +23,11 @@ function App() {
     ]);
     const [notes, setNotes] = useState<string>("");
 
-    const total = items.reduce((prev, curr) => prev + curr.amount, 0)
+    const total = items.reduce((prev, curr) => prev + curr.amount, 0);
 
     return (
         <div className="App">
-            <InvoiceTable
-                items={items}
-                setItems={setItems}
-                total={total}
-            />
+            <InvoiceTable items={items} setItems={setItems} total={total} />
             <label htmlFor="notes">Notes:</label>
             <textarea
                 id="notes"
@@ -38,11 +40,16 @@ function App() {
                 type="submit"
                 onClick={(e) => {
                     e.preventDefault();
+                    const postBody: IInvoicePostBody = {
+                        items,
+                        total,
+                        notes,
+                    };
                     axios
-                        .post("https://eob5gg57g649qqh.m.pipedream.net", {
-                            items,
-                            total,
-                        })
+                        .post(
+                            "https://eob5gg57g649qqh.m.pipedream.net",
+                            postBody
+                        )
                         .then(function (response) {
                             console.log(response);
                         })
