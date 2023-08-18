@@ -1,15 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Invoice from './Invoice';
 import reportWebVitals from './reportWebVitals';
+import Root, { loader as rootLoader, action as rootAction } from './routes/root';
+import Invoice, { loader as invoiceLoader } from './routes/Invoice';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    loader: rootLoader,
+    action: rootAction,
+  },
+  {
+    path: "/invoices/:invoiceId",
+    element: <Invoice />,
+    loader: invoiceLoader
+  },
+]);
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Invoice />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
