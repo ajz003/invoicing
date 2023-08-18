@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import InvoiceItem from "./InvoiceItem";
 import { produce } from "immer";
+import InvoiceTotal from "./InvoiceTotal";
 
 export interface IInvoiceItem {
     id: number;
     description: string;
     qty: number;
     rate: number;
+    amount: number;
 }
 
 const dummyItems: IInvoiceItem[] = [
@@ -15,6 +17,7 @@ const dummyItems: IInvoiceItem[] = [
         description: "",
         qty: 0,
         rate: 0,
+        amount: 0,
     },
 ];
 
@@ -48,6 +51,7 @@ const InvoiceTable = () => {
                                 break;
                         }
                     }
+                    item.amount = parseFloat((item.qty * item.rate).toFixed(2));
                 }
             })
         );
@@ -71,10 +75,14 @@ const InvoiceTable = () => {
                         description={item.description}
                         qty={item.qty}
                         rate={item.rate}
+                        amount={item.amount}
                         handleItemChange={handleItemChange}
                     />
                 ))}
             </tbody>
+            <tfoot>
+                <InvoiceTotal total={items.reduce((prev, curr) => prev + curr.amount, 0)} />
+            </tfoot>
         </table>
     );
 };

@@ -6,26 +6,38 @@ interface InvoiceItemProps {
     description: string;
     qty: number;
     rate: number;
+    amount: number;
     handleItemChange: (id: number, property: keyof IInvoiceItem, newValue: string | number) => void;
 }
 
 const InvoiceItem = (props: InvoiceItemProps) => {
-    const { id, description, qty, rate, handleItemChange } = props;
+    const { id, description, qty, rate, amount, handleItemChange } = props;
     return (
             <tr>
                 <td>
-                    <input type="text" value={description} onChange={(e) => handleItemChange(id, "description", e.target.value)} />
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e) => handleItemChange(id, "description", e.target.value)}
+                    />
                 </td>
                 <td>
-                    <input type="number" value={qty} onChange={(e) => handleItemChange(id, "qty", parseInt(e.target.value))} />
+                    <input type="number"
+                        value={qty}
+                        onChange={(e) => handleItemChange(id, "qty", parseInt(e.target.value))}
+                    />
                 </td>
                 <td>
                     <input
                         type="number"
-                        value={rate} min="0.01"step="0.01" onChange={(e) => handleItemChange(id, "rate", parseFloat(parseFloat(e.target.value).toFixed(2)))} />
+                        value={rate}
+                        min="0.01"
+                        step="0.01"
+                        onChange={(e) => handleItemChange(id, "rate", parseFloat(parseFloat(e.target.value).toFixed(2)))}
+                    />
                 </td>
                 <td>
-                    <input type="number" readOnly value={(qty*rate).toFixed(2)} />
+                    <input type="number" readOnly value={amount} />
                 </td>
             </tr>
     );
