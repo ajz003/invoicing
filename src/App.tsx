@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import InvoiceTable from './components/InvoiceTable/InvoiceTable';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <InvoiceTable></InvoiceTable>
     </div>
   );
 }
