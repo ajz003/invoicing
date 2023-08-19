@@ -68,8 +68,8 @@ const InvoiceTable = (props: InvoiceTableProps) => {
     };
 
     return (
-        <div className="invoice-table">
-            <table>
+        <>
+            <table className="invoice-table">
                 <thead>
                     <tr>
                         <th>Item Description</th>
@@ -98,7 +98,7 @@ const InvoiceTable = (props: InvoiceTableProps) => {
                 </tfoot>
             </table>
             <AddItemButton addLineItem={addLineItem} />
-        </div>
+        </>
     );
 };
 

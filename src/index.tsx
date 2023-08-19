@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home, { loader as homeLoader, action as homeAction } from './routes/Home';
-import Invoice, { loader as invoiceLoader } from './routes/Invoice';
+import Invoice, { loader as invoiceLoader } from './routes/SingleInvoicePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([

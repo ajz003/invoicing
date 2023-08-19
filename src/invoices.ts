@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import { IInvoice, InvoiceStatus } from "./routes/Invoice";
+import { IInvoice, InvoiceStatus } from "./routes/SingleInvoicePage";
 
 export async function getInvoices(): Promise<IInvoice[]> {
     await fakeNetwork("getInvoices:");

@@ -1,5 +1,5 @@
 import { Form, Link, useLoaderData } from "react-router-dom";
-import { IInvoice, InvoiceStatus } from "./Invoice";
+import { IInvoice, InvoiceStatus } from "./SingleInvoicePage";
 import { createInvoice, getInvoices } from "../invoices";
 import "../App.scss";
 import { useEffect, useState } from "react";
@@ -88,7 +88,7 @@ export default function Home() {
                 </table>
                 <div className="create-invoice-wrapper">
                     <Form method="post">
-                        <button type="submit">Create New Invoice</button>
+                        <button type="submit">+ Create New Invoice</button>
                     </Form>
                 </div>
             </div>

@@ -34,7 +34,7 @@ type InvoiceLoaderData = {
     invoice: IInvoice;
 };
 
-function Invoice() {
+const SingleInvoicePage = () => {
     const navigate = useNavigate();
     const { invoice } = useLoaderData() as InvoiceLoaderData;
     const [name, setName] = useState<string>(invoice.name);
@@ -145,4 +145,4 @@ function Invoice() {
     );
 }
 
-export default Invoice;
+export default SingleInvoicePage;
