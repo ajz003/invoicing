@@ -69,14 +69,14 @@ const InvoiceTable = (props: InvoiceTableProps) => {
     };
 
     return (
-        <div>
+        <div className="invoice-table">
             <table>
                 <thead>
                     <tr>
                         <th>Item Description</th>
                         <th>Qty</th>
-                        <th>Rate</th>
-                        <th>Amount</th>
+                        <th>Rate ($)</th>
+                        <th>Amount ($)</th>
                     </tr>
                 </thead>
                 <tbody>

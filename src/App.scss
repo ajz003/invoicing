@@ -1,0 +1,78 @@
+.homepage {
+  table {
+    border: 2px solid grey;
+    padding: 16px;
+  }
+  th, td {
+    padding-left: 30px;
+    padding-right: 40px;
+  }
+
+  td.late {
+    background-color: red;
+  }
+
+  .alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: red;
+    padding: 0 8px;
+    margin: 16px 0;
+    width: 400px;
+
+    .dismiss {
+      cursor: pointer;
+    }
+  }
+
+  .create-invoice-wrapper {
+    margin-top: 32px;
+  }
+}
+
+.invoice-table {
+  margin: 32px;
+}
+
+.App {
+  textarea {
+    display: block;
+  }
+  input {
+    margin: 16px 0;
+    display: block;
+    font-size: 16px;
+  }
+  label {
+    display: block;
+    font-size: 32px;
+  }
+
+  .back-btn {
+    margin-bottom: 24px;
+    display: block;
+  }
+}
+
+.add-item-btn {
+  margin: 32px 0;
+}
+
+.save-btn {
+  margin-top: 32px;
+  font-size: 32px;
+}
+
+.invoice-table {
+  border: 2px solid grey;
+  padding: 32px 16px;
+  input {
+    margin: 0;
+  }
+  .amount-total {
+    font-weight: bold;
+    font-size: 24px;
+  }
+}
+

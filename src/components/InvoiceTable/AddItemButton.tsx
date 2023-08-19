@@ -4,7 +4,7 @@ const AddItemButton = (props: {
     addLineItem: () => void;
 }) => {
     return (
-        <button type="button" onClick={props.addLineItem}>+ Add Line Item</button>
+        <button className="add-item-btn" type="button" onClick={props.addLineItem}>+ Add Line Item</button>
     );
 };
 

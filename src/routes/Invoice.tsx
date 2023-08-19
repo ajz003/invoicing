@@ -3,7 +3,7 @@ import axios from "axios";
 import InvoiceTable, {
     IInvoiceItem,
 } from "../components/InvoiceTable/InvoiceTable";
-import { Form, useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { getInvoice, updateInvoice } from "../invoices";
 import { Link } from "react-router-dom";
 
@@ -41,7 +41,16 @@ function Invoice() {
     console.log(invoice);
     const [name, setName] = useState<string>(invoice.name);
     const [dueDate, setDueDate] = useState(invoice.dueDate);
-    const [items, setItems] = useState<IInvoiceItem[]>([...invoice.items]);
+    const [items, setItems] = useState<IInvoiceItem[]>(
+        invoice.items.length === 0 ? [{
+            id: 0,
+            description: "",
+            qty: 0,
+            rate: 0,
+            amount: 0,
+        }] :
+        [...invoice.items]
+    );
     const [notes, setNotes] = useState<string>(invoice.notes);
     const [status, setStatus] = useState<InvoiceStatus>(invoice.status);
 
@@ -49,7 +58,8 @@ function Invoice() {
 
     return (
         <div className="App">
-            <Link to="/">Back to Home</Link>
+            <Link className="back-btn" to="/">Back to Home</Link>
+            
             <label htmlFor="name">Invoice Name:</label>
             <input
                 id="name"
@@ -58,6 +68,7 @@ function Invoice() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
+            
             <label htmlFor="due-date">Due Date:</label>
             <input
                 type="datetime-local"
@@ -66,28 +77,33 @@ function Invoice() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
             />
+            
 
-            <label htmlFor="status">Set status:</label>
+            <label htmlFor="status">Status:</label>
             <select value={status} onChange={(e) => setStatus(e.target.value as InvoiceStatus)} name="status" id="status">
-                <option value="Paid">Paid</option>
                 <option value="Outstanding">Outstanding</option>
+                <option value="Paid">Paid</option>
                 <option value="Uncollectable">Uncollectable</option>
+                <option value="Draft">Draft</option>
             </select>
+            
 
             <InvoiceTable items={items} setItems={setItems} total={total} />
-            <br />
+            
 
             <label htmlFor="notes">Notes:</label>
             <textarea
                 id="notes"
                 name="notes"
                 value={notes}
+                rows={4}
+                cols={50}
                 onChange={(e) => setNotes(e.target.value)}
             />
-            <br />
 
             <button
                 type="submit"
+                className="save-btn"
                 onClick={async (e) => {
                     e.preventDefault();
                     const postBody: IInvoice = {
@@ -108,7 +124,7 @@ function Invoice() {
                     navigate("/");
                 }}
             >
-                Submit
+                Save
             </button>
         </div>
     );
