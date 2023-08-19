@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 
 export async function loader({ params }: { params: any }) {
     const invoice = await getInvoice(params.invoiceId);
-    console.log(invoice, 'invoice')
     return { invoice };
 }
 
@@ -18,7 +17,7 @@ export enum InvoiceStatus {
     Paid = "Paid",
     Oustanding = "Outstanding",
     Late = "Late",
-    Uncollectable = "Uncollectable"
+    Uncollectable = "Uncollectable",
 }
 
 export interface IInvoice {
@@ -38,18 +37,20 @@ type InvoiceLoaderData = {
 function Invoice() {
     const navigate = useNavigate();
     const { invoice } = useLoaderData() as InvoiceLoaderData;
-    console.log(invoice);
     const [name, setName] = useState<string>(invoice.name);
     const [dueDate, setDueDate] = useState(invoice.dueDate);
     const [items, setItems] = useState<IInvoiceItem[]>(
-        invoice.items.length === 0 ? [{
-            id: 0,
-            description: "",
-            qty: 0,
-            rate: 0,
-            amount: 0,
-        }] :
-        [...invoice.items]
+        invoice.items.length === 0
+            ? [
+                  {
+                      id: 0,
+                      description: "",
+                      qty: 0,
+                      rate: 0,
+                      amount: 0,
+                  },
+              ]
+            : [...invoice.items]
     );
     const [notes, setNotes] = useState<string>(invoice.notes);
     const [status, setStatus] = useState<InvoiceStatus>(invoice.status);
@@ -57,39 +58,51 @@ function Invoice() {
     const total = items.reduce((prev, curr) => prev + curr.amount, 0);
 
     return (
-        <div className="App">
-            <Link className="back-btn" to="/">Back to Home</Link>
-            
-            <label htmlFor="name">Invoice Name:</label>
-            <input
-                id="name"
-                name="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-            
-            <label htmlFor="due-date">Due Date:</label>
-            <input
-                type="datetime-local"
-                id="due-date"
-                name="due-date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-            />
-            
+        <div className="invoice-page">
+            <Link className="back-btn" to="/">
+                Back to Home
+            </Link>
 
-            <label htmlFor="status">Status:</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value as InvoiceStatus)} name="status" id="status">
-                <option value="Outstanding">Outstanding</option>
-                <option value="Paid">Paid</option>
-                <option value="Uncollectable">Uncollectable</option>
-                <option value="Draft">Draft</option>
-            </select>
-            
+            <div className="invoice-header">
+                <div>
+                    <label htmlFor="name">Invoice Name:</label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="due-date">Due Date:</label>
+                    <input
+                        type="datetime-local"
+                        id="due-date"
+                        name="due-date"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="status">Status:</label>
+                    <select
+                        value={status}
+                        onChange={(e) =>
+                            setStatus(e.target.value as InvoiceStatus)
+                        }
+                        name="status"
+                        id="status"
+                    >
+                        <option value="Outstanding">Outstanding</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Uncollectable">Uncollectable</option>
+                        <option value="Draft">Draft</option>
+                    </select>
+                </div>
+            </div>
 
             <InvoiceTable items={items} setItems={setItems} total={total} />
-            
 
             <label htmlFor="notes">Notes:</label>
             <textarea
@@ -120,7 +133,9 @@ function Invoice() {
                         postBody
                     );
                     console.log(response);
+                    // Update IndexedDB
                     await updateInvoice(invoice.id, postBody);
+
                     navigate("/");
                 }}
             >

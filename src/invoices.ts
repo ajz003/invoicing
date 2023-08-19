@@ -21,7 +21,6 @@ export async function createInvoice() {
         status: InvoiceStatus.Draft,
     };
     const invoices: IInvoice[] = await getInvoices();
-    console.log(invoices)
     invoices.unshift(invoice);
     await set(invoices);
     return invoice;

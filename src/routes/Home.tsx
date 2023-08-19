@@ -9,7 +9,7 @@ export async function loader() {
     return { invoices };
 }
 
-type RootLoaderData = {
+type HomeLoaderData = {
     invoices: IInvoice[];
 };
 
@@ -18,11 +18,12 @@ export async function action() {
     return { invoice };
 }
 
-export default function Root() {
-    const { invoices } = useLoaderData() as RootLoaderData;
+export default function Home() {
+    const { invoices } = useLoaderData() as HomeLoaderData;
     const [displayAlert, setDisplayAlert] = useState(false);
     const [alertDismissed, setAlertDismissed] = useState(false);
  
+    // Late invoice alert handling
     useEffect(() => {
         let isLate = false;
         invoices.forEach(invoice => {
@@ -41,7 +42,7 @@ export default function Root() {
         setAlertDismissed(true);
         setDisplayAlert(false);
     }
-    
+
     return (
         <>
             <div className="homepage">

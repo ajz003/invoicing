@@ -30,7 +30,6 @@ const InvoiceTable = (props: InvoiceTableProps) => {
             produce((draft) => {
                 const item = draft.find((item) => item.id === id);
                 if (item) {
-                    console.log(typeof newValue);
                     if (
                         typeof newValue === "string" &&
                         property === "description"
