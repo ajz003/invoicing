@@ -1,6 +1,6 @@
 # Invoicing App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This take-home project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) as a base.
 
 ## Installation
 
