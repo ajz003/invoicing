@@ -129,7 +129,7 @@ const SingleInvoicePage = () => {
                         status,
                     };
                     const response = await axios.post(
-                        "https://eob5gg57g649qqh.m.pipedream.net",
+                        "https://eob5gg57g649qqh.m.pipedream.net", // endpoint has been disabled
                         postBody
                     );
                     console.log(response);
