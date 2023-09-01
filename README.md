@@ -1,6 +1,6 @@
 # Take-Home Invoicing App
 
-This take-home project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) as a base.
+Calaxy's take-home assignment to create a basic invoicing app. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) as a base.
 
 ## Installation
 
